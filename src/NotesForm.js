@@ -3,7 +3,7 @@ import Grid from "@material-ui/core/Grid";
 import Fab from "@material-ui/core/Fab";
 import { TextField, Icon } from '@material-ui/core';
 
-const NotesForm = ({ handleClick, title, description }) => {
+const NotesForm = ({ handleClick, saveNote, title, description }) => {
     return (
         <Fragment>
             <Grid item xs={12}>
@@ -27,7 +27,7 @@ const NotesForm = ({ handleClick, title, description }) => {
                     value={description}
                 />
             </Grid>
-            <Fab color="secondary" className="editIcon">
+            <Fab color="secondary" className="editIcon" onClick={saveNote}>
                 <Icon>edit_icon</Icon>
             </Fab>
         </Fragment>

@@ -23,8 +23,24 @@ class App extends Component {
     this.setState({
       [field]: e.target.value
     });
-    console.log(this.state);
   };
+
+  saveNote = () => {
+    if (this.state.title && this.state.description) {
+      this.setState({
+        notes: [
+          ...this.state.notes,
+          {
+            id: Date.now(),
+            title: this.state.title,
+            description: this.state.description
+          }],
+        title: "",
+        description: ""
+      });
+      alert("Se ha guardado la nota " + this.state.title + " !!!");
+    }
+  }
 
   render() {
     return (
@@ -37,7 +53,7 @@ class App extends Component {
             {/* Note List */}
           </Grid>
           <Grid item xs={8}>
-            <NotesForm handleClick={this.handleClick} title={this.state.title} description={this.state.description}/>
+            <NotesForm handleClick={this.handleClick} saveNote={this.saveNote} title={this.state.title} description={this.state.description}/>
           </Grid>
         </Grid>
         <Fab color="primary" className="addIcon">
