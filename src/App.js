@@ -13,10 +13,19 @@ class App extends Component {
     super(props)
     this.state = {
       title: "",
-      descriprion: "",
+      description: "",
       notes: []
     }
   }
+
+  //Clousures && Currying
+  handleClick = field => e => {
+    this.setState({
+      [field]: e.target.value
+    });
+    console.log(this.state);
+  };
+
   render() {
     return (
       <Fragment>
@@ -28,7 +37,7 @@ class App extends Component {
             {/* Note List */}
           </Grid>
           <Grid item xs={8}>
-            <NotesForm />
+            <NotesForm handleClick={this.handleClick} title={this.state.title} description={this.state.description}/>
           </Grid>
         </Grid>
         <Fab color="primary" className="addIcon">
