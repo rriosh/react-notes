@@ -1,7 +1,11 @@
 //React Components
 import React, { Component, Fragment } from "react";
+//React Router
+import { Link, Route } from "react-router-dom";
 //Notes Components
 import NotesForm from "./NotesForm";
+import NotesList from "./NotesList";
+import Home from "./Home";
 //Material-UI
 import Typografy from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
@@ -42,6 +46,12 @@ class App extends Component {
     }
   }
 
+  deleteNote = noteId => {
+    this.setState({
+      notes: this.state.notes.filter(note => note.id !== noteId)
+    });
+  }
+
   render() {
     return (
       <Fragment>
@@ -50,13 +60,15 @@ class App extends Component {
         </Typografy>
         <Grid container justify="center" spacing={2}>
           <Grid item xs={4}>
-            {/* Note List */}
+            <NotesList notes={this.state.notes} deleteNote={this.deleteNote}/>
           </Grid>
           <Grid item xs={8}>
-            <NotesForm handleClick={this.handleClick} saveNote={this.saveNote} title={this.state.title} description={this.state.description}/>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/add" render={()=><NotesForm handleClick={this.handleClick} saveNote={this.saveNote} title={this.state.title} description={this.state.description}/>} />
+            {/* <NotesForm handleClick={this.handleClick} saveNote={this.saveNote} title={this.state.title} description={this.state.description}/> */}
           </Grid>
         </Grid>
-        <Fab color="primary" className="addIcon">
+        <Fab color="primary" className="addIcon" component={Link} to={"/add"}>
           <AddIcon/>
         </Fab>
       </Fragment>
