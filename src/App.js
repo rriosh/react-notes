@@ -6,6 +6,7 @@ import { Link, Route } from "react-router-dom";
 import NotesForm from "./NotesForm";
 import NotesList from "./NotesList";
 import Home from "./Home";
+import Note from "./Note";
 //Material-UI
 import Typografy from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
@@ -64,8 +65,25 @@ class App extends Component {
           </Grid>
           <Grid item xs={8}>
             <Route exact path="/" component={Home} />
-            <Route exact path="/add" render={()=><NotesForm handleClick={this.handleClick} saveNote={this.saveNote} title={this.state.title} description={this.state.description}/>} />
-            {/* <NotesForm handleClick={this.handleClick} saveNote={this.saveNote} title={this.state.title} description={this.state.description}/> */}
+            <Route
+              exact
+              path="/add"
+              render={ () => (
+                <NotesForm
+                  handleClick={this.handleClick}
+                  saveNote={this.saveNote}
+                  title={this.state.title}
+                  description={this.state.description}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/view/:id"
+              render={ (props) => (
+                <Note {...props} notes={this.state.notes} />
+              )}
+            />
           </Grid>
         </Grid>
         <Fab color="primary" className="addIcon" component={Link} to={"/add"}>
