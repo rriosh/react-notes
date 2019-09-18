@@ -12,7 +12,7 @@ const NotesList = ({ notes, deleteNote }) => {
             <Fragment>
                 <List>
                     {notes.map(note => (
-                        <ListItem key={note.id} button component={Link} to={`/view/${note.id}`}>
+                        <ListItem key={note.id} button >
                             <ListItemText primary={note.title} secondary={moment(note.id).format("MMMM Do YYYY, h:mm:ss a")} />
                             <ListItemSecondaryAction>
                                 <IconButton edge="end" aria-label="comments" component={Link} to={`/view/${note.id}`}>

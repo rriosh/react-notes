@@ -1,7 +1,8 @@
 //React Components
 import React, { Component, Fragment } from "react";
+import axios from "axios";
 //React Router
-import { Link, Route } from "react-router-dom";
+import { Link, Route, Redirect } from "react-router-dom";
 //Notes Components
 import NotesForm from "./NotesForm";
 import NotesList from "./NotesList";
@@ -23,6 +24,16 @@ class App extends Component {
     }
   }
 
+  componentDidMount() {
+    axios.get("/notes.json").then(
+      response => {
+        if(response.status === 200) {
+          this.setState({notes: response.data});
+        }
+      })
+      .catch(e => console.log(e));
+  };
+
   //Clousures && Currying
   handleClick = field => e => {
     this.setState({
@@ -43,7 +54,7 @@ class App extends Component {
         title: "",
         description: ""
       });
-      alert("Se ha guardado la nota " + this.state.title + " !!!");
+      // alert("Se ha guardado la nota " + this.state.title + " !!!");
     }
   }
 
@@ -80,9 +91,12 @@ class App extends Component {
             <Route
               exact
               path="/view/:id"
-              render={ (props) => (
-                <Note {...props} notes={this.state.notes} />
-              )}
+              render={ (props) => {
+                const note = this.state.notes.filter(
+                  note => note.id === parseInt(props.match.params.id)
+                )[0];
+                return note ? <Note {...props} notes={this.state.notes} /> : <Redirect to="/" />;
+              }}
             />
           </Grid>
         </Grid>
